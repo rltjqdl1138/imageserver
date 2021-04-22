@@ -4,7 +4,7 @@
   "description": "Image Server sample",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=test&nodemon --ignore './logs/' --exec babel-node src/index.js",
+    "start": "set NODE_ENV=test&nodemon --ignore './resource/' --exec babel-node src/index.js",
     "build": "babel -d dist src"
   },
   "repository": {
