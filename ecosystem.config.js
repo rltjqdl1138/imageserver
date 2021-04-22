@@ -10,10 +10,7 @@ module.exports = {
       exec_mode: 'cluster',
       env: {
         NODE_ENV: 'development',
-        instances: 1,
-        SCHEME: 'http',
-        HOST: 'dev.earthyguna.com',
-        PORT: 5000,
+        instances: 1
       }
     },
   ],

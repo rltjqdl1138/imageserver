@@ -1,11 +1,20 @@
 import axios from 'axios'
+import {app} from './config'
+
+
 const router = require('express').Router()
 const multiparty = require('multiparty')
 const bodyParser = require('body-parser')
 const fs = require('fs');
 const __resource = __dirname+'/../resource/image/'
 
-const IMAGE_SERVER = 'http://localhost:3900'
+let IMAGE_DB_SERVER = 'http://localhost:3900'
+if(app === 'development')
+    IMAGE_DB_SERVER = 'https://dev.earthyguna.com'
+else if(app === 'production')
+    IMAGE_DB_SERVER = 'https://earthyguna.com'
+
+console.log(`\n\nMain Server:\t${IMAGE_DB_SERVER}\n\n`)
 const {token} = require('../resource/json/token.json')
 
 router.use(bodyParser.urlencoded({extended: false}))
@@ -61,7 +70,7 @@ router.post('/', (req,res)=>{
     form.parse(req)
 })
 const sendToJigugong = async (filename)=>{
-    const {data:response} = await axios.post(`${IMAGE_SERVER}/v1/image`,{filename},
+    const {data:response} = await axios.post(`${IMAGE_DB_SERVER}/v1/image`,{filename},
     {
         headers:{
             'Content-Type': 'application/json',
