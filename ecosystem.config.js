@@ -11,6 +11,11 @@ module.exports = {
       env: {
         NODE_ENV: 'development',
         instances: 1
+      },
+      env_production: {
+        NODE_ENV: 'production',
+        exec_mode: 'cluster',
+        instances: '0'
       }
     },
   ],
