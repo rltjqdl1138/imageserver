@@ -6,7 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-resource/image/*
+resource/image/*/*
+resource/raw/*
+resource/thumbnail/*
+
 resource/json/*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
