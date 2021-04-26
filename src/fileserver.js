@@ -148,6 +148,7 @@ const sendToJigugong = async (filename, server_type)=>{
         default:
             throw new Error('not supported')
     }
+    console.log(server_url)
     const {data:response} = await axios.post(`${server_url}/v1/image`,{filename},
     {
         headers:{
@@ -170,10 +171,17 @@ const resizeImage = async(filename)=>{
     const height_list = RATIOS.map(e=>Math.floor(pivot_height*e))
 
     await sharp(DIR_RAW + filename).resize(320,320).toFile(DIR_THUMB+filename)
+    console.log('thumb')
     await sharp(DIR_RAW + filename).resize(width_list[0],height_list[0] ).toFile(DIR_320 +filename)
+    console.log('320')
     await sharp(DIR_RAW + filename).resize(width_list[1],height_list[1] ).toFile(DIR_480 +filename)
+    console.log('480')
     await sharp(DIR_RAW + filename).resize(width_list[2],height_list[2] ).toFile(DIR_640 +filename)
+    console.log('640')
     await sharp(DIR_RAW + filename).resize(width_list[3],height_list[3] ).toFile(DIR_720 +filename)
+    console.log('720')
     await sharp(DIR_RAW + filename).resize(width_list[4],height_list[4] ).toFile(DIR_1080+filename)
+    console.log('1080')
 }
+
 module.exports = router
