@@ -17,7 +17,7 @@ const DIR_720 = __dirname+'/../resource/image/720/'
 const DIR_1080 = __dirname+'/../resource/image/1080/'
 
 const LOCAL_SERVER = 'http://localhost:3900'
-const DEV_SERVER = 'https://dev.earthyguna.com'
+const DEV_SERVER = 'http://dev.earthyguna.com'
 const SERVER = 'https://earthyguna.com'
 
 console.log(`\n\nMain Server:\t${LOCAL_SERVER}\n\n`)
