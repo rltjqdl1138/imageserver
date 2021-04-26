@@ -2,7 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 const fileserver = require('./fileserver')
-
+const admins = require('./admin')
 const appRun = async () => {
     const app = express();
     app.use(cors());
@@ -16,6 +16,7 @@ const appRun = async () => {
     });
   
     app.use('/image', fileserver)
+    app.use('/admin', admins)
     app.use('/', (req, res) => {
       res.type('text/plain');
       res.status(200);
