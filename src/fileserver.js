@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {app} from './config'
+const axios = require('axios')
 const sizeOf = require('image-size')
 const sharp = require('sharp')
 

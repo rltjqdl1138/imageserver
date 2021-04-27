@@ -1,4 +1,4 @@
-require('@babel/polyfill');
+
 const appRun = require('./app').default;
 const http = require('http');
 

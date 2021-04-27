@@ -1,6 +1,6 @@
 
-import express from 'express';
-import cors from 'cors';
+const express = require('express') ;
+const cors =  require('cors');
 const fileserver = require('./fileserver')
 const admins = require('./admin')
 const appRun = async () => {
@@ -41,4 +41,4 @@ const appRun = async () => {
   
     return { app };
 };
-export default appRun
+exports.default = appRun

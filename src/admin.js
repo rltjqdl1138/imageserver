@@ -15,10 +15,10 @@ const getImageList = ()=>new Promise((resolve, reject)=>{
 
 router.get('/list', async (req,res)=>{
     const list = await getImageList()
-    list.map(e=>({
+    const result = list.map(e=>({
         file:       e,
         thumbnail:  `/image/thumb/${e}`
     }))
-    return res.json({list});
+    return res.json({list:result});
 })
 module.exports = router
