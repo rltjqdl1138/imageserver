@@ -112,6 +112,7 @@ router.get('/*', (req,res)=>{
         .on('error',()=> res.status(404).end())
 })
 router.post('/*', (req,res)=>{
+    let filename = null;
     const parsedUrl = (req.url.split('/'))[1]
     const form = new multiparty.Form();
     form.on('error', err => res.status(500).end() )
@@ -119,21 +120,25 @@ router.post('/*', (req,res)=>{
         if (!part.filename)
             return res.status(400).end()
         const extend = part.filename.split('.')
-        const filename =  String(Math.floor(Math.random()*100000)) + String(Number(new Date())) + '.' +extend[extend.length-1];
+        filename =  String(Math.floor(Math.random()*100000)) + String(Number(new Date())) + '.' +extend[extend.length-1];
         console.log(`[Upload filename]: ${filename}`)
         const dirname = DIR_RAW + filename
         const writeStream = fs.createWriteStream(dirname);
         writeStream.filename = filename;
         part.pipe(writeStream);
         part.on('end',()=>{
-            writeStream.end();
-            resizeImage(filename)
-                .then(()=>sendToJigugong(filename, parsedUrl))
-                .then((data)=>res.status(200).json(data))
-                .catch((e)=>{console.log(e); res.status(500).end()})
+            writeStream.end()
         });
     });
     form.parse(req)
+    form.on('close',()=>{
+        setTimeout(()=>{
+            resizeImage(filename)
+            .then(()=>sendToJigugong(filename, parsedUrl))
+                .then((data)=>res.status(200).json(data))
+                .catch((e)=>{console.log(e); res.status(500).end()})
+        },0)
+    })
 })
 const sendToJigugong = async (filename, server_type)=>{
     let server_url
@@ -171,7 +176,7 @@ const resizeImage = async(filename)=>{
     console.log(width_list)
     console.log(height_list)
     await Image.withMetadata().resize(320,320).toFile(DIR_THUMB+filename)
-    console.log('thumb')
+    //console.log('thumb')
     //await Image.withMetadata().resize(width_list[0],height_list[0] ).toFile(DIR_320 +filename)
     //console.log('320')
     //await Image.withMetadata().resize(width_list[1],height_list[1] ).toFile(DIR_480 +filename)
@@ -179,7 +184,7 @@ const resizeImage = async(filename)=>{
     //await Image.withMetadata().resize(width_list[2],height_list[2] ).toFile(DIR_640 +filename)
     //console.log('640')
     await Image.withMetadata().resize(width_list[3],height_list[3] ).toFile(DIR_720 +filename)
-    console.log('720')
+    //console.log('720')
     //await Image.withMetadata().resize(width_list[4],height_list[4] ).toFile(DIR_1080+filename)
     //console.log('1080')
 }
