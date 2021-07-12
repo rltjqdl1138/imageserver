@@ -147,17 +147,19 @@ const sendToJigugong = async (filename, server_type)=>{
     let server_url, access_token
     switch(server_type){
         case '':
+            access_token = token
             server_url = SERVER; break;
         case 'dev':
             server_url = DEV_SERVER;
             access_token = dev_token
             break;
         case 'test':
-            access_token = token
+            //access_token = token
             server_url = LOCAL_SERVER; break;
         default:
             throw new Error('not supported')
     }
+    console.log(access_token)
     const {data:response} = await axios.post(`${server_url}/v1/image`,{filename},{
         headers:{
             'Content-Type': 'application/json',
