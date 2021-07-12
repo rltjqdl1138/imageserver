@@ -20,7 +20,9 @@ const DEV_SERVER = 'http://dev.earthyguna.com'
 const SERVER = 'https://earthyguna.com'
 
 console.log(`\n\nMain Server:\t${LOCAL_SERVER}\n\n`)
-const {token} = require('../resource/json/token.json')
+const tokens = require('../resource/json/token.json')
+const token = tokens.token
+const dev_token = tokens['token-dev']
 
 router.use(bodyParser.urlencoded({extended: false}))
 router.use(bodyParser.json())
@@ -141,22 +143,24 @@ router.post('/*', (req,res)=>{
     })
 })
 const sendToJigugong = async (filename, server_type)=>{
-    let server_url
+    let server_url, access_token
     switch(server_type){
         case '':
             server_url = SERVER; break;
         case 'dev':
-            server_url = DEV_SERVER; break;
+            server_url = DEV_SERVER;
+            access_token = dev_token
+            break;
         case 'test':
+            access_token = token
             server_url = LOCAL_SERVER; break;
         default:
             throw new Error('not supported')
     }
-    const {data:response} = await axios.post(`${server_url}/v1/image`,{filename},
-    {
+    const {data:response} = await axios.post(`${server_url}/v1/image`,{filename},{
         headers:{
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': access_token
         }
     })
     return response
