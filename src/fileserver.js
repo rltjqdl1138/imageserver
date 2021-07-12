@@ -23,7 +23,8 @@ console.log(`\n\nMain Server:\t${LOCAL_SERVER}\n\n`)
 const tokens = require('../resource/json/token.json')
 const token = tokens.token
 const dev_token = tokens['token-dev']
-
+console.log(token)
+console.log(dev_token)
 router.use(bodyParser.urlencoded({extended: false}))
 router.use(bodyParser.json())
 router.get('/html', (req,res)=>{
